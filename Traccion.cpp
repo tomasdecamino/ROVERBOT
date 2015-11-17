@@ -23,14 +23,9 @@
 Traccion::Traccion(
             PinName iv, PinName id,
             PinName dv, PinName dd
-            ):
-                    dirI(id),velI(iv),
-                    dirD(dd),velD(dv){
-	printf("id:% iv:%i dd:%i dv:%i\n\r",id,iv,dd,dv);
-}
-
-extern Serial pc;
-
+            ): dirI(id),velI(iv),
+               dirD(dd),velD(dv){}
+               
 Traccion::~Traccion(){}
 
 void Traccion::init(uint16_t freq){
