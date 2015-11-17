@@ -21,3 +21,38 @@
 
 
 #include "Carro.h"
+extern Carro* Carro::instancia;
+
+Carro::Carro(PinName chanAdecI, PinName chanBdecI,
+			 PinName chanAdecD, PinName chanBdecD,
+			 PinName pwmMI,	PinName dirMI,
+			 PinName pwmMD,	PinName dirMD
+			):velocidad(chanAdecI,chanBdecI,chanAdecD,chanBdecD),
+			  traccion(pwmMI,dirMI,pwmMD,dirMD){
+				Carro::instancia = this;
+				traccion.setPWMFrequency(PWM_FRQ);
+}
+
+void Carro::init(void){
+    this->traccion.init();
+    this->velocidad.init();
+	//this->timer.attach(Carro::update,0.015);
+}
+
+void Carro::update(void){
+	instancia->velocidad.getV(instancia->velsActuales);
+	instancia->traccion.get(instancia->pwmActuales);
+	
+	if(instancia->velsActuales[0]!=instancia->velI){
+		instancia->pwmActuales[0] += ((float)instancia->velsActuales[0])/((float)instancia->velI);
+	}
+	if(instancia->velsActuales[1]!=instancia->velD){
+		instancia->pwmActuales[1] += ((float)instancia->velsActuales[1])/((float)instancia->velD);
+	}
+	instancia->traccion.set(instancia->pwmActuales[0],instancia->pwmActuales[1]);
+}
+
+void Carro::set(float velI,float velD){
+	this->velI = velI;
+	this->velD = velD;
+}

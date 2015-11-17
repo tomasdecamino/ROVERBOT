@@ -25,16 +25,13 @@
 #include "Ticker.h"
 #include "Traccion.h"
 #include "Velocidad.h"
-#include "PID.h"
+
+#define PWM_FRQ 100 //100Hz
+#define VEL_PERCENT 0.05f
 class Carro{
-	private:
-		Traccion motores;
-		Velocidad movimiento;
-		PID pidI;
-		PID pidD;
-		static Carro* instancia;
-		Ticker timer;
 	public:
+		Velocidad velocidad;
+		
 		Carro(
 			PinName chanAdecI, 	PinName chanBdecI,
 			PinName chanAdecD, 	PinName chanBdecD,
@@ -42,9 +39,25 @@ class Carro{
 			PinName pwmMI,		PinName dirMI,
 			PinName pwmMD,		PinName dirMD
 			);
-		void set(float velI,velD);
-		void get(void);
-	
+		void init(void);
+		void set(float velI,float velD);
+		static void update(void);
+		
+		//GETERS
+		Velocidad* 	getV(void);
+		Traccion* 	getT(void);
+	private:
+		uint8_t velI;
+		uint8_t velD;
+		//Velocidad velocidad;
+		Traccion traccion;
+		static Carro* instancia;
+		Ticker timer;
+		
+		// Temporales como globales para optimisacion.
+		float pwmActuales[2];
+		int16_t velsActuales[2];
+		int16_t diferencias[2];
 };
 
 #endif //CARRO_H
