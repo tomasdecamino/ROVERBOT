@@ -40,7 +40,7 @@ class Velocidad{
 		void static update(void);
 		
 		float get(uint8_t);
-		void getV(float[]);
+		void getV(int16_t[]);
 	
 	private:
 		static DigitalIn* decAd;
@@ -50,8 +50,8 @@ class Velocidad{
 
 		Ticker timer;
 		
-		static float promA;
-		static float promB;
+		static int16_t promA;
+		static int16_t promB;
 		
 		volatile static int16_t pasosDecA;
 		volatile static int16_t pasosDecB;

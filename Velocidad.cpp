@@ -26,8 +26,8 @@ extern DigitalIn* Velocidad::decAd;
 extern InterruptIn* Velocidad::decA;
 extern DigitalIn* Velocidad::decBd;
 extern InterruptIn* Velocidad::decB;
-extern float Velocidad::promA;
-extern float Velocidad::promB;
+extern int16_t Velocidad::promA;
+extern int16_t Velocidad::promB;
 extern volatile int16_t Velocidad::pasosDecA;
 extern volatile int16_t Velocidad::pasosDecB;
 
@@ -55,7 +55,7 @@ void Velocidad::init(void){
 	this->decB->rise(this->decBfr);
 	this->decB->fall(this->decBff);
 
-	this->timer.attach(this->update,0.02);
+	this->timer.attach(this->update,0.01);
 }
 
 void Velocidad::decAfr(void){
@@ -91,8 +91,8 @@ void Velocidad::decBff(void){
 }
 
 void Velocidad::update(void){
-	promA = pasosDecA*60.0/180.0;
-	promB = pasosDecB*60.0/180.0;
+	promA = pasosDecA;
+	promB = pasosDecB;
 	pasosDecA = 0;
 	pasosDecB = 0;
 }
@@ -108,7 +108,7 @@ float Velocidad::get(uint8_t i){
 	}
 }
 
-void Velocidad::getV(float resp[]){
+void Velocidad::getV(int16_t resp[]){
 	resp[0] = promA;
 	resp[1] = promB;
 }
