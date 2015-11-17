@@ -60,6 +60,7 @@ public:
     float compute(void);
 
     //Getters.
+    float getSetPint(void);
     float getInMin(void);
     float getInMax(void);
     float getOutMin(void);
