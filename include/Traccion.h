@@ -27,7 +27,7 @@
 #include "PwmOut.h"
 #include "DigitalOut.h"
     
-#define PWM_TRACCION_PERIOD 500 // 10000/5 = 2KHz   
+#define PWM_TRACCION_PERIOD 0.00005 //  20KHz   
     
 class Traccion{
     public:
