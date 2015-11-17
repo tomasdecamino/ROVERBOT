@@ -60,14 +60,14 @@ public:
     float compute(void);
 
     //Getters.
-    float getInMin();
-    float getInMax();
-    float getOutMin();
-    float getOutMax();
-    float getInterval();
-    float getP();
-    float getI();
-    float getD();
+    float getInMin(void);
+    float getInMax(void);
+    float getOutMin(void);
+    float getOutMax(void);
+    float getInterval(void);
+    float getP(void);
+    float getI(void);
+    float getD(void);
 
 private:
     bool usingFeedForward;
