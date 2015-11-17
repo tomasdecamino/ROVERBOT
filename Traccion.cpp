@@ -53,6 +53,8 @@ void Traccion::stop(bool brute){
 
 void Traccion::set(float veli,float veld){
     pc.printf("veli:%f  veld:%f",veli,veld);
+    this->velocidades[0] = veli;
+    this->velocidades[1] = veld;
     if(veld<0.0f){
         this->dirD = 1;
         veld = 1.0f+veld;
@@ -69,7 +71,13 @@ void Traccion::set(float veli,float veld){
     this->velD = veld;
 }
 
+void Traccion::get(float pwm[]){
+	pwm[0] = this->velocidades[0];
+	pwm[1] = this->velocidades[1];
+}
 
 void Traccion::setPWMFrequency(uint16_t freq){
-	this->velI.pulsewidth_us(1000000UL/(uint32_t)freq);
+	uint32_t us =1000000UL/(uint32_t)freq;
+	this->velI.pulsewidth_us(us);
+	this->velD.pulsewidth_us(us);
 }

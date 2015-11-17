@@ -36,7 +36,8 @@ class Traccion{
         void init(void);
         void stop(bool brute=true);
         void set(float veli,float veld);
-        void setPWMFrequiency(uint16_t);
+        void get(float pwms[]);
+        void setPWMFrequency(uint16_t);
         ~Traccion(void);
             
     private:
@@ -44,6 +45,8 @@ class Traccion{
         PwmOut velI;
         DigitalOut dirD;
         PwmOut velD;
+        
+        float velocidades[2];
 
 };
 
