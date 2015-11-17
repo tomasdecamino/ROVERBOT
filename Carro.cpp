@@ -29,7 +29,9 @@ Carro::Carro(PinName chanAdecI, PinName chanBdecI,
 			 PinName pwmMD,	PinName dirMD
 			):velocidadI(chanAdecI,chanBdecI,NC,15,QEI::X4_ENCODING),
 			  velocidadD(chanAdecD,chanBdecD,NC,15,QEI::X4_ENCODING),
-			  traccion(pwmMI,dirMI,pwmMD,dirMD)
+			  traccion(pwmMI,dirMI,pwmMD,dirMD),
+			  pidI(0.2, 0.1, 0.0, 0.05),
+			  pidD(0.2, 0.1, 0.0, 0.05)
 			  {
 				Carro::instancia = this;
 }
@@ -37,6 +39,10 @@ Carro::Carro(PinName chanAdecI, PinName chanBdecI,
 void Carro::init(void){
     this->traccion.init(PWM_FRQ);
 	this->timer.attach(Carro::update,0.05);
+	this->pidI.setInputLimits(-150,150);
+	this->pidD.setInputLimits(-150,150);
+	this->pidI.setOutputLimits(-1.0,1.0);
+	this->pidD.setOutputLimits(-1.0,1.0);
 }
 
 void Carro::update(void){
@@ -45,7 +51,12 @@ void Carro::update(void){
 	instancia->velsActuales[1] = instancia->velocidadD.getPulses();
 	instancia->velocidadD.reset();
 	
+	instancia->pidI.setProcessValue(instancia->velsActuales[0]);
+	instancia->pidD.setProcessValue(instancia->velsActuales[1]);
 	
+	instancia->traccion.set(instancia->pidI.compute(),instancia->pidD.compute());
+	
+	/*
 	instancia->traccion.get(instancia->pwmActuales);
 	if(instancia->velI > instancia->velsActuales[0]){
 		instancia->pwmActuales[0] += VEL_PERCENT;
@@ -62,12 +73,15 @@ void Carro::update(void){
 			instancia->pwmActuales[1] -= VEL_PERCENT;
 		}
 	}
-	instancia->traccion.set(instancia->pwmActuales[0],instancia->pwmActuales[1]);
+	instancia->traccion.set(instancia->pwmActuales[0],instancia->pwmActuales[1]);*/
+	
 }
 
 void Carro::set(int16_t velI,int16_t velD){
-	this->velI = velI;
-	this->velD = velD;
+	//this->velI = velI;
+	//this->velD = velD;
+	this->pidI.setSetPoint(velI);
+	this->pidD.setSetPoint(velD);
 }
 
 int16_t Carro::get(uint8_t index){

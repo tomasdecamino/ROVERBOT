@@ -69,4 +69,3 @@ void Traccion::get(float pwm[]){
 	pwm[0] = this->velocidades[0];
 	pwm[1] = this->velocidades[1];
 }
-

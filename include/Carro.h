@@ -25,6 +25,7 @@
 #include "Ticker.h"
 #include "Traccion.h"
 #include "QEI.h"
+#include "PID.h"
 
 #define PWM_FRQ 1000 //1000Hz
 #define VEL_PERCENT 0.02
@@ -50,7 +51,9 @@ class Carro{
 	
 		QEI velocidadI;
 		QEI velocidadD;
-	
+		PID pidI;
+		PID	pidD;
+		
 		Traccion traccion;
 		static Carro* instancia;
 		Ticker timer;

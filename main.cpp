@@ -47,13 +47,12 @@ int main(){
     i2c.frequency(400000);
     t.start();
     wait(2);
-    carro.set(0,0);
+    carro.set(2,2);
     while(1){
 		pc.printf(" vels  %i , %i\n\r",carro.get(0),carro.get(1));
 		wait(0.25);
     }
 
-  
     uint8_t whoami = mpu6050.readByte(MPU6050_ADDRESS, WHO_AM_I_MPU6050);
     pc.printf("I AM 0x%x\n\r", whoami);
     pc.printf("I SHOULD BE 0x68\n\r");
