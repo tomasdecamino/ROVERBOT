@@ -24,14 +24,13 @@
 #include "mbed.h"
 #include "Ticker.h"
 #include "Traccion.h"
-#include "Velocidad.h"
+#include "QEI.h"
 
-#define PWM_FRQ 100 //100Hz
-#define VEL_PERCENT 0.05f
+#define PWM_FRQ 1000 //1000Hz
+#define VEL_PERCENT 0.02
 class Carro{
 	public:
-		Velocidad velocidad;
-		
+	
 		Carro(
 			PinName chanAdecI, 	PinName chanBdecI,
 			PinName chanAdecD, 	PinName chanBdecD,
@@ -40,24 +39,24 @@ class Carro{
 			PinName pwmMD,		PinName dirMD
 			);
 		void init(void);
-		void set(float velI,float velD);
+		void set(int16_t velI,int16_t velD);
 		static void update(void);
 		
 		//GETERS
-		Velocidad* 	getV(void);
-		Traccion* 	getT(void);
+		int16_t get(uint8_t index);
 	private:
-		uint8_t velI;
-		uint8_t velD;
-		//Velocidad velocidad;
+		volatile int16_t velI;
+		volatile int16_t velD;
+	
+		QEI velocidadI;
+		QEI velocidadD;
+	
 		Traccion traccion;
 		static Carro* instancia;
 		Ticker timer;
-		
 		// Temporales como globales para optimisacion.
 		float pwmActuales[2];
-		int16_t velsActuales[2];
-		int16_t diferencias[2];
+		volatile int16_t velsActuales[2];
 };
 
 #endif //CARRO_H

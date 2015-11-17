@@ -23,8 +23,8 @@
     #include "MPU6050.h"
     
     Carro carro(
-			PB_4,PB_14,  //decoder izquierda
-			PB_15,PB_10, //decoder derecha
+			PC_2,PC_3,  //decoder izquierda
+			PC_1,PC_0, //decoder derecha
 			PB_13,PB_5,  //motor izquierda
 			PA_10,PC_4   //motor derecha
 			);
@@ -47,13 +47,10 @@ int main(){
     i2c.frequency(400000);
     t.start();
     wait(2);
-    int16_t f[2];
-    carro.set(5,5);
+    carro.set(0,0);
     while(1){
-		wait(0.1);
-		carro.update();
-		carro.velocidad.getV(f);
-		pc.printf(" vels  %i , %i\n\r",f[0],f[1]);
+		pc.printf(" vels  %i , %i\n\r",carro.get(0),carro.get(1));
+		wait(0.25);
     }
 
   

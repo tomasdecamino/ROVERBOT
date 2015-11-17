@@ -26,18 +26,18 @@ Traccion::Traccion(
             ):
                     dirI(id),velI(iv),
                     dirD(dd),velD(dv){
+	printf("id:% iv:%i dd:%i dv:%i\n\r",id,iv,dd,dv);
 }
 
 extern Serial pc;
 
 Traccion::~Traccion(){}
 
-void Traccion::init(void){
-    this->velI.write(0);
-    this->velD.write(0);
-    this->dirI.write(0);
-    this->dirD.write(0);
+void Traccion::init(uint16_t freq){
     this->stop();
+	uint32_t us =1000000UL/(uint32_t)freq;
+	this->velI.pulsewidth_us(us);
+	this->velD.pulsewidth_us(us);
 }
 
 void Traccion::stop(bool brute){
@@ -52,7 +52,6 @@ void Traccion::stop(bool brute){
 }
 
 void Traccion::set(float veli,float veld){
-    pc.printf("veli:%f  veld:%f",veli,veld);
     this->velocidades[0] = veli;
     this->velocidades[1] = veld;
     if(veld<0.0f){
@@ -76,8 +75,3 @@ void Traccion::get(float pwm[]){
 	pwm[1] = this->velocidades[1];
 }
 
-void Traccion::setPWMFrequency(uint16_t freq){
-	uint32_t us =1000000UL/(uint32_t)freq;
-	this->velI.pulsewidth_us(us);
-	this->velD.pulsewidth_us(us);
-}

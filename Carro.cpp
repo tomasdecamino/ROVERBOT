@@ -27,32 +27,49 @@ Carro::Carro(PinName chanAdecI, PinName chanBdecI,
 			 PinName chanAdecD, PinName chanBdecD,
 			 PinName pwmMI,	PinName dirMI,
 			 PinName pwmMD,	PinName dirMD
-			):velocidad(chanAdecI,chanBdecI,chanAdecD,chanBdecD),
-			  traccion(pwmMI,dirMI,pwmMD,dirMD){
+			):velocidadI(chanAdecI,chanBdecI,NC,15,QEI::X4_ENCODING),
+			  velocidadD(chanAdecD,chanBdecD,NC,15,QEI::X4_ENCODING),
+			  traccion(pwmMI,dirMI,pwmMD,dirMD)
+			  {
 				Carro::instancia = this;
-				traccion.setPWMFrequency(PWM_FRQ);
 }
 
 void Carro::init(void){
-    this->traccion.init();
-    this->velocidad.init();
-	//this->timer.attach(Carro::update,0.015);
+    this->traccion.init(PWM_FRQ);
+	this->timer.attach(Carro::update,0.05);
 }
 
 void Carro::update(void){
-	instancia->velocidad.getV(instancia->velsActuales);
-	instancia->traccion.get(instancia->pwmActuales);
+	instancia->velsActuales[0] = instancia->velocidadI.getPulses();
+	instancia->velocidadI.reset();
+	instancia->velsActuales[1] = instancia->velocidadD.getPulses();
+	instancia->velocidadD.reset();
 	
-	if(instancia->velsActuales[0]!=instancia->velI){
-		instancia->pwmActuales[0] += ((float)instancia->velsActuales[0])/((float)instancia->velI);
+	
+	instancia->traccion.get(instancia->pwmActuales);
+	if(instancia->velI > instancia->velsActuales[0]){
+		instancia->pwmActuales[0] += VEL_PERCENT;
+	}else{
+		if(instancia->velI < instancia->velsActuales[0]){
+			instancia->pwmActuales[0] -= VEL_PERCENT;
+		}
 	}
-	if(instancia->velsActuales[1]!=instancia->velD){
-		instancia->pwmActuales[1] += ((float)instancia->velsActuales[1])/((float)instancia->velD);
+	
+	if(instancia->velD > instancia->velsActuales[1]){
+		instancia->pwmActuales[1] += VEL_PERCENT;
+	}else{
+		if(instancia->velD < instancia->velsActuales[1]){
+			instancia->pwmActuales[1] -= VEL_PERCENT;
+		}
 	}
 	instancia->traccion.set(instancia->pwmActuales[0],instancia->pwmActuales[1]);
 }
 
-void Carro::set(float velI,float velD){
+void Carro::set(int16_t velI,int16_t velD){
 	this->velI = velI;
 	this->velD = velD;
+}
+
+int16_t Carro::get(uint8_t index){
+	return this->velsActuales[index];
 }

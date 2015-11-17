@@ -33,11 +33,10 @@ class Traccion{
             PinName iv, PinName id,
             PinName dv, PinName dd
         );
-        void init(void);
+        void init(uint16_t freq);
         void stop(bool brute=true);
         void set(float veli,float veld);
         void get(float pwms[]);
-        void setPWMFrequency(uint16_t);
         ~Traccion(void);
             
     private:
