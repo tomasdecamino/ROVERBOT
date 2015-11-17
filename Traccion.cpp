@@ -28,13 +28,13 @@ Traccion::Traccion(
                     dirD(dd),velD(dv){
 }
 
+extern Serial pc;
+
 Traccion::~Traccion(){}
 
 void Traccion::init(void){
     this->velI.write(0);
-    this->velI.period_us(PWM_TRACCION_PERIOD);
     this->velD.write(0);
-    this->velD.period_us(PWM_TRACCION_PERIOD);
     this->dirI.write(0);
     this->dirD.write(0);
     this->stop();
@@ -52,6 +52,7 @@ void Traccion::stop(bool brute){
 }
 
 void Traccion::set(float veli,float veld){
+    pc.printf("veli:%f  veld:%f",veli,veld);
     if(veld<0.0f){
         this->dirD = 1;
         veld = 1.0f+veld;
@@ -66,4 +67,9 @@ void Traccion::set(float veli,float veld){
     }
     this->velI = veli;
     this->velD = veld;
+}
+
+
+void Traccion::setPWMFrequency(uint16_t freq){
+	this->velI.pulsewidth_us(1000000UL/(uint32_t)freq);
 }

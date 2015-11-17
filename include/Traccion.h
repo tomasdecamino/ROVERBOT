@@ -27,8 +27,6 @@
 #include "PwmOut.h"
 #include "DigitalOut.h"
     
-#define PWM_TRACCION_PERIOD 0.00005 //  20KHz   
-    
 class Traccion{
     public:
         Traccion(
@@ -38,7 +36,7 @@ class Traccion{
         void init(void);
         void stop(bool brute=true);
         void set(float veli,float veld);
-        
+        void setPWMFrequiency(uint16_t);
         ~Traccion(void);
             
     private:
