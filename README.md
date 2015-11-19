@@ -9,9 +9,12 @@ Para este proyecto se emplea una targeta STM32F411RET6(Nucleo F411), junto con M
 
 #Instalacion
 En el archivo Makefile editar las lineas ST_LINK, GCC_BIN y colocar la direccion donde se encuentren los binarios correspondientes.
-	ST_LINK hace referencia a donde esta instalado st-link(requisito)
-	GCC_BIN hace refetencia a donde esta la carpeta bin del compilador gcc-arm-embedded	
+
+	ST_LINK hace referencia a donde esta instalado st-link(requisito).
+	GCC_BIN hace refetencia a donde esta la carpeta bin del compilador gcc-arm-embedded.
+	
 En caso de que esten en agregados a la variable de sistema PATH, con el comando whereis o which desde la consola pueden optenerlos facilmente.
+
 	whereis st-link
 	which arm-none-eabi-gcc
 
