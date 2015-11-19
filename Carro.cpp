@@ -30,19 +30,21 @@ Carro::Carro(PinName chanAdecI, PinName chanBdecI,
 			):velocidadI(chanAdecI,chanBdecI,NC,15,QEI::X4_ENCODING),
 			  velocidadD(chanAdecD,chanBdecD,NC,15,QEI::X4_ENCODING),
 			  traccion(pwmMI,dirMI,pwmMD,dirMD),
-			  pidI(0.2, 0.1, 0.0, 0.05),
-			  pidD(0.2, 0.1, 0.0, 0.05)
+			  pidI(0.8, 0.2, 0.0001, 0.03),
+			  pidD(0.8, 0.2, 0.0001, 0.03)
 			  {
 				Carro::instancia = this;
 }
 
 void Carro::init(void){
     this->traccion.init(PWM_FRQ);
-	this->timer.attach(Carro::update,0.05);
-	this->pidI.setInputLimits(-150,150);
-	this->pidD.setInputLimits(-150,150);
+	this->pidI.setInputLimits(-30,30);
+	this->pidD.setInputLimits(-30,30);
 	this->pidI.setOutputLimits(-1.0,1.0);
 	this->pidD.setOutputLimits(-1.0,1.0);
+	this->pidI.setMode(AUTO_MODE);
+	this->pidD.setMode(AUTO_MODE);
+	this->timer.attach(Carro::update,0.030);
 }
 
 void Carro::update(void){
@@ -75,6 +77,11 @@ void Carro::update(void){
 	}
 	instancia->traccion.set(instancia->pwmActuales[0],instancia->pwmActuales[1]);*/
 	
+}
+
+void Carro::setPIDConstants(float k,float i,float d){
+	this->pidI.setTunings(k,i,d);
+	this->pidD.setTunings(k,i,d);
 }
 
 void Carro::set(int16_t velI,int16_t velD){

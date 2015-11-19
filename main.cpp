@@ -47,9 +47,17 @@ int main(){
     i2c.frequency(400000);
     t.start();
     wait(2);
-    carro.set(2,2);
+    carro.set(2,-2);
+    int vi=0;
+    int vd=0;
     while(1){
 		pc.printf(" vels  %i , %i\n\r",carro.get(0),carro.get(1));
+		if(pc.readable()){
+			pc.printf("Inserte velocidad( # # )");
+			pc.scanf(" %i %i",&vi,&vd);
+			pc.printf("Vel Izquierda: %i vel Derecha %i",vi,vd);
+			carro.set(vi,vd);
+		}
 		wait(0.25);
     }
 

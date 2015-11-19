@@ -26,8 +26,8 @@ PID::PID(float Kc, float tauI, float tauD, float interval) {
     this->usingFeedForward = false;
     this->inAuto           = false;
 
-    this->setInputLimits(-5.0, 5.0);
-    this->setOutputLimits(0.0, 2.0);
+    this->setInputLimits(0, 3.3);
+    this->setOutputLimits(0, 1.0);
 
     this->tSample = interval;
 

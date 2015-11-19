@@ -43,6 +43,7 @@ class Carro{
 		void set(int16_t velI,int16_t velD);
 		static void update(void);
 		
+		void setPIDConstants(float k,float i,float d);
 		//GETERS
 		int16_t get(uint8_t index);
 	private:
@@ -51,10 +52,12 @@ class Carro{
 	
 		QEI velocidadI;
 		QEI velocidadD;
+		
+		Traccion traccion;
+		
 		PID pidI;
 		PID	pidD;
 		
-		Traccion traccion;
 		static Carro* instancia;
 		Ticker timer;
 		// Temporales como globales para optimisacion.

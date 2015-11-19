@@ -29,10 +29,10 @@ Traccion::Traccion(
 Traccion::~Traccion(){}
 
 void Traccion::init(uint16_t freq){
-    this->stop();
 	uint32_t us =1000000UL/(uint32_t)freq;
 	this->velI.pulsewidth_us(us);
 	this->velD.pulsewidth_us(us);
+	this->stop();
 }
 
 void Traccion::stop(bool brute){
