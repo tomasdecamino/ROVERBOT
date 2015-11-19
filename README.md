@@ -8,7 +8,7 @@ Para este proyecto se emplea una targeta STM32F411RET6(Nucleo F411), junto con M
 	 st-link: https://github.com/texane/stlink
 
 #Compilacion
-	make(en el directorio donde se encuntra el proyecto)
+	make
 
 #Subir a la targeta
 	st-flash --reset write Carro.bin 0x8000000
