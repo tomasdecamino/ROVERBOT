@@ -30,8 +30,8 @@ Carro::Carro(PinName chanAdecI, PinName chanBdecI,
 			):velocidadI(chanAdecI,chanBdecI,NC,15,QEI::X4_ENCODING),
 			  velocidadD(chanAdecD,chanBdecD,NC,15,QEI::X4_ENCODING),
 			  traccion(pwmMI,dirMI,pwmMD,dirMD),
-			  pidI(0.8, 0.2, 0.0001, 0.03),
-			  pidD(0.8, 0.2, 0.0001, 0.03)
+			  pidI(0.35, 0.02, 0.000000000000001, 0.03),
+			  pidD(0.35, 0.02, 0.000000000000001, 0.03)
 			  {
 				Carro::instancia = this;
 }
