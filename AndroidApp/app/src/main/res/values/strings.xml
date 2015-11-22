@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RoverBot</string>
+
+    <string name="btn_ad">AD</string>
+    <string name="btn_at">AT</string>
+    <string name="btn_de">DE</string>
+    <string name="btn_iz">IZ</string>
+    <string name="btn_det">DETENER</string>
+    <string name="btn_con">Conectado</string>
+</resources>

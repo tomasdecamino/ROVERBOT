@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context=".Controles"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/debug"
+        android:layout_weight="0.98" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_ad"
+            android:id="@+id/Adelante"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/Derecha"
+            android:layout_toStartOf="@+id/Derecha"
+            android:onClick="AD" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_at"
+            android:id="@+id/Atras"
+            android:layout_alignTop="@+id/Derecha"
+            android:layout_toRightOf="@+id/Izquierda"
+            android:layout_toEndOf="@+id/Izquierda"
+            android:onClick="AT" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_iz"
+            android:id="@+id/Izquierda"
+            android:layout_alignTop="@+id/Atras"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="38dp"
+            android:layout_marginStart="38dp"
+            android:onClick="IZ" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_de"
+            android:id="@+id/Derecha"
+            android:layout_alignTop="@+id/checkBox"
+            android:layout_toRightOf="@+id/Atras"
+            android:layout_toEndOf="@+id/Atras"
+            android:onClick="DE" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_det"
+            android:id="@+id/Detener"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="63dp"
+            android:layout_marginEnd="63dp"
+            android:onClick="stop" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_con"
+            android:id="@+id/checkBox"
+            android:checked="false"
+            android:longClickable="false"
+            android:clickable="false"
+            android:layout_below="@+id/Adelante"
+            android:layout_toLeftOf="@+id/Detener"
+            android:layout_toStartOf="@+id/Detener"
+            android:layout_marginRight="31dp"
+            android:layout_marginEnd="31dp" />
+    </RelativeLayout>
+
+</LinearLayout>
