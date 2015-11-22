@@ -31,6 +31,9 @@
 
     Serial pc(USBTX, USBRX); // tx, rx
 	Serial otro(PA_11,PA_12);
+	
+void flushSerialBuffer(Serial &s) {while (s.readable()) { s.getc(); } return; } 
+   
 	MMA7660 MMA(I2C_SDA, I2C_SCL);
 	DigitalIn espReady(PA_6);
 int main(){
@@ -43,11 +46,11 @@ int main(){
     int vi=0;
     int vd=0;
     while(!espReady);
+    flushSerialBuffer(otro);
     while(1){
-		otro.printf("%f,%f",MMA.x(),MMA.y());
+		otro.printf("%f,%fs",MMA.x(),MMA.y());
 		if(otro.readable()){
-			otro.getc();
-			otro.scanf(" %i,%i",&vi,&vd);
+			otro.scanf(" %i,%i ",&vi,&vd);
 			carro.set(vi,vd);
 		}
 		wait(0.5);

@@ -14,6 +14,7 @@ volatile int velD;
 String angulos;
 String temp;
 int indice;
+char buffer[128];
 
 ESP8266WebServer server(80);
 void handleRoot() {
@@ -34,6 +35,8 @@ void handleRoot() {
   Serial.print(velI);
   Serial.print(',');
   Serial.print(velD);
+  Serial.print(' ');
+  
 }
 
 void setup() {
@@ -42,8 +45,8 @@ void setup() {
 	delay(1000);
 	Serial.begin(115200);
 	WiFi.softAP(ssid, password);
-  
-	IPAddress myIP = WiFi.softAPIP();
+  Serial.println(WiFi.softAPIP());
+	
 	server.on("/", handleRoot);
 	server.begin();
   Serial.flush();
@@ -53,6 +56,8 @@ void setup() {
 void loop() {
 	server.handleClient();
   if(Serial.available()){
-    angulos = Serial.readString();
+    indice = Serial.readBytesUntil('s', buffer, 128);
+    buffer[indice]='\0';
+    angulos = buffer; 
   }
 }
