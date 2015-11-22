@@ -50,7 +50,7 @@ int main(){
     while(1){
 		otro.printf("%f,%fs",MMA.x(),MMA.y());
 		if(otro.readable()){
-			otro.scanf(" %i,%i ",&vi,&vd);
+			otro.scanf(" %i,%i",&vi,&vd);
 			carro.set(vi,vd);
 		}
 		wait(0.5);
